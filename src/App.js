@@ -19,7 +19,7 @@ class App extends Component {
     };
   }
 
-  url = "http://www.omdbapi.com/?apikey=[INSERT_YOUR_API_KEY_HERE]";
+  url = "http://www.omdbapi.com/?apikey=f2f0ec42";
 
   componentDidMount = () => {
     Promise.all([
@@ -59,10 +59,14 @@ class App extends Component {
 
   fetchComments = async (movieID) => {
     const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+    const username ='user9'
+    const password = 'sP4YMKhBpqQHAPJN'
+    const headers =new Headers({
+    "Content-Type" : "application/json",
+    'Authorization': 'Basic ' + btoa(username + ":" + password),
+    });
     const comments = await fetch(commentsUrl + movieID, {
-      headers: new Headers({
-        Authorization: "[INSERT_YOUR_AUTH_HERE]",
-      }),
+      headers:headers,
     }).then((response) => response.json());
     this.setState({ comments });
   };

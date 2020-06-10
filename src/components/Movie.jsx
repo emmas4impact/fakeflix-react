@@ -22,13 +22,16 @@ class Movie extends Component {
   submitComment = async (e) => {
     e.preventDefault();
     const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+    const username ='user9'
+    const password = 'sP4YMKhBpqQHAPJN'
+    const headers =new Headers({
+    "Content-Type" : "application/json",
+    'Authorization': 'Basic ' + btoa(username + ":" + password),
+    });
     const response = await fetch(commentsUrl, {
       method: "POST",
       body: JSON.stringify(this.state.newComment),
-      headers: new Headers({
-        Authorization: "[INSERT_YOUR_AUTH_HERE]",
-        "Content-Type": "application/json",
-      }),
+      headers: headers,
     });
     if (response.ok) {
       alert("Comment added");
