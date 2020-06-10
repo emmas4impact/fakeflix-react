@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Navbar, Nav, InputGroup, FormControl } from "react-bootstrap";
+import { Navbar, Nav, InputGroup, FormControl, Button } from "react-bootstrap";
+import {Link, withRouter} from 'react-router-dom';
+import Register from './Register';
 
 class NetflixNavbar extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class NetflixNavbar extends Component {
   };
 
   render() {
+    //console.log(this.props)
     return (
       <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
         <Navbar.Brand href="/">
@@ -46,6 +49,11 @@ class NetflixNavbar extends Component {
             <Nav.Link className="font-weight-bold" href="/">
               My List
             </Nav.Link>
+           
+            <Link to="/register" className="nav-link">
+            <Button variant="outline-primary">Control</Button>
+            
+            </Link>
           </Nav>
           <span className="d-none d-md-flex align-items-center">
             <InputGroup className="icons">
@@ -68,4 +76,4 @@ class NetflixNavbar extends Component {
   }
 }
 
-export default NetflixNavbar;
+export default withRouter(NetflixNavbar);
