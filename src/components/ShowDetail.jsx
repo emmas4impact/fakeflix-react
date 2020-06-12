@@ -120,7 +120,7 @@ class MovieDetail extends React.Component{
   handleCommentText = (e) => {
     let newComment = this.state.newComment;
     newComment.comment = e.currentTarget.value;
-    this.setState({ newComment });
+    this.setState({ newComment:newComment });
   };
 
 

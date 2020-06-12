@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form, Spinner, Alert } from "react-bootstrap";
+import Cards from 'react-credit-cards';
 
  
 
@@ -17,10 +18,17 @@ class Register extends React.Component {
         yob: "",
         city: "",
         postal: "",
-        creditCard: ""
+        creditCard:{
+          cvc: '',
+          expiry: '',
+          focus: '',
+          name: '',
+          number: '',
+        }
       },
       isLoading: false,
-      errMess: ""
+      errMess: "",
+      changeCount: 0,
     };
   }
 
@@ -53,7 +61,13 @@ class Register extends React.Component {
             yob: "",
             city: "",
             postal: "",
-            creditCard: ""
+            creditCard:{
+              cvc: '',
+              expiry: '',
+              focus: '',
+              name: '',
+              number: '',
+            }
           }
         });
       } else {
@@ -83,13 +97,24 @@ class Register extends React.Component {
         reservation[currentId] = input.currentTarget.value;
     }
 
-    this.setState({ reservation: reservation, 
-        changeCount: this.state.changeCount + 1});
+    this.setState((prevState, props)=>{
+      return {
+        reservation: reservation, 
+        changeCount: prevState.changeCount + 1
+      }
+    });
   };
 
   render() {
     return (
       <div className="mb-3">
+        <Cards
+          cvc={this.state.reservation.creditCard.cvc}
+          expiry={this.state.reservation.creditCard.expiry}
+          focused={this.state.reservation.creditCard.focus}
+          name={this.state.reservation.creditCard.name}
+          number={this.state.reservation.creditCard.number}
+        />
         {this.state.errMess.length > 0 && (
           <Alert variant="danger">
             We encountered a problem while processing your request:{" "}
@@ -148,7 +173,7 @@ class Register extends React.Component {
                     We'll never share your email with anyone else.
                     </Form.Text>
                 </Form.Group>
-                <Form.Group controlId="formGridAddress2">
+                <Form.Group >
                     <Form.Label>Address </Form.Label>
                     <Form.Control placeholder="Apartment, studio, or floor"
                     id="address"
@@ -159,7 +184,7 @@ class Register extends React.Component {
                         
             </Col>
             <Col md={5}>
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group >
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" 
                     id="password"
@@ -181,7 +206,7 @@ class Register extends React.Component {
             </Col>
           </Row>
          <Form.Row>
-                <Form.Group as={Col} md="6" controlId="validationCustom03">
+                <Form.Group as={Col} md="6" >
                 <Form.Label>City</Form.Label>
                 <Form.Control type="text" placeholder="City" required 
                 id="city"
@@ -192,7 +217,7 @@ class Register extends React.Component {
                 </Form.Control.Feedback>
                 </Form.Group>
                
-                <Form.Group as={Col} md="3" controlId="validationCustom05">
+                <Form.Group as={Col} md="3" >
                 <Form.Label>Zip</Form.Label>
                 <Form.Control type="text" placeholder="Zip" required 
                  id="postal"
@@ -203,6 +228,15 @@ class Register extends React.Component {
                 </Form.Control.Feedback>
                 </Form.Group>
         </Form.Row>
+        <Row>
+        <input
+            type="tel"
+            name="number"
+            placeholder="Card Number"
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+          />
+        </Row>
        
         
           <Button type="submit">Submit</Button>
